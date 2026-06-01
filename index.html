@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Kora</title>
+  <link rel="icon" href="imgs/KORA_Icon_Black_PNG.png" type="image/png">
+  <meta name="description"
+    content="Kora is a modern sanctuary where movement, recovery and community meet. We help members grow their mind, body and spirit. We’re here for the long run.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preload" as="image" href="imgs/optimized/background.webp" fetchpriority="high">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+  <!-- Copernicus Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Copernicus:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fraunces (Display) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+    rel="stylesheet">
+  <!-- StyreneB Font -->
+  <link href="https://fonts.googleapis.com/css2?family=StyreneB:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- HelveticaNow Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Helvetica+Now:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- International Telephone Input CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+</head>
+
+<body>
+  <!-- Sticky navigation with subtle wordmark -->
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Kora Home">
+        <img src="imgs/workmark-only-logo.png" alt="Kora wordmark" />
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero" aria-labelledby="headline">
+      <div class="overlay" aria-hidden="true"></div>
+
+      <div class="panel" id="panel">
+        <div class="content-row">
+          <div class="hero-copy">
+            <h1 class="headline" id="headline">
+              <span>The Kora</span>
+              <span>Experience</span>
+            </h1>
+            <p class="gym-description lead">
+              Born in Nepal and guided by Himalayan principles of balance and inner strength, Kora is a modern sanctuary
+              where movement, recovery and community meet. We help members grow their mind, body and spirit.
+            </p>
+          </div>
+
+          <form action="https://formspree.io/f/xldlyzlr" method="POST" class="signup card" id="signup"
+            aria-labelledby="signup-title">
+            <div class="form-brand" aria-hidden="true">
+              <img src="imgs/logo.png" alt="">
+            </div>
+            <div class="form-intro">
+              <p class="form-kicker">Founding waitlist</p>
+              <h2 id="signup-title">Begin your Kora journey</h2>
+              <p class="social-proof" aria-live="polite">Join over <strong>200</strong> early members waiting for Kora.
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" placeholder="e.g. Jordan Rivera" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="name@email.com" autocomplete="email" required>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <div class="phone-input-container">
+                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" autocomplete="tel" required>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-button" aria-label="Join the waitlist">
+              <span class="button-text">Join the Waitlist</span>
+              <span class="button-loading" hidden>
+                <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" aria-hidden="true">
+                  <path d="M21 12a9 9 0 11-6.219-8.56" />
+                </svg>
+                Submitting...
+              </span>
+            </button>
+            <p class="form-microcopy" id="form-microcopy">No spam. Opening dates and events only.</p>
+
+            <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_subject" value="New Kora Waitlist Signup">
+            <input type="hidden" name="_next" value="">
+            <input type="hidden" name="_captcha" value="false">
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== KORA SPACES SWIPER ===== -->
+  <section class="spaces-section reveal-on-scroll" aria-labelledby="spaces-title">
+    <div class="spaces-inner">
+      <h2 id="spaces-title" class="spaces-title">Kora Spaces</h2>
+
+      <div class="spaces-swiper" data-spaces-swiper>
+        <div class="spaces-track" aria-live="polite">
+          <figure class="spaces-slide" data-space-label="KORA" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/exterior.webp"
+              alt="KORA" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Aerial View" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/topview.webp"
+              alt="aerial view" width="1380" height="775" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Car Park" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/parking.webp"
+              alt="car park" width="1380" height="774" loading="lazy"
+              decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Recovery Area" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/recreation.webp"
+              alt="recovery area" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Reception" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora-waiting.webp"
+              alt="reception" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Virtual Studio" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora Office-1.webp"
+              alt="virtual studio" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Interior" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora-interior.webp"
+            alt="interior" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Interior" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora-drinking.webp"
+            alt="interior" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Movement Space" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+              data-src="imgs/optimized/swiper/Kora-group-workout.webp" alt="Movement Space" width="1380"
+              height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Open Gym" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora-gym.webp"
+              alt="open gym" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Open Gym" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora-27.webp"
+              alt="open gym" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Flow Space" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora Studio-1.webp"
+              alt="Flow Space" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Flow Space" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora Studio-4.webp"
+              alt="Flow Space" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Spa Reception" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="imgs/optimized/swiper/Kora Spa-2.webp"
+              alt="SPA reception" width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Spa" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+              data-src="imgs/optimized/swiper/Kora Massage Room Couple-2.4.webp" alt="SPA"
+              width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Changing Room" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+              data-src="imgs/optimized/swiper/Kora-ladies-changing.webp" alt="Changing Room" width="1380"
+              height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Changing Room" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+              data-src="imgs/optimized/swiper/kora-gents-changing.webp" alt="changing room" width="1380"
+              height="776" loading="lazy" decoding="async">
+          </figure>
+          <figure class="spaces-slide" data-space-label="Accessible Washroom" tabindex="0">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+              data-src="imgs/optimized/swiper/Kora-accessible -changing-1.webp" alt="accessible washroom"
+              width="1380" height="776" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <div class="spaces-controls" aria-label="Kora Spaces carousel controls">
+          <button class="spaces-arrow" type="button" data-spaces-prev aria-label="Previous space">
+          </button>
+          <div class="spaces-dots" role="tablist" aria-label="Choose a space"></div>
+          <button class="spaces-arrow" type="button" data-spaces-next aria-label="Next space">
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== WAITLIST CTA ===== -->
+  <section class="waitlist-cta reveal-on-scroll" aria-labelledby="waitlist-cta-title">
+    <h2 id="waitlist-cta-title">A quiet space to mend, move, and rest</h2>
+    <!-- ===== INSTAGRAM LINK ===== -->
+    <div class="instagram-link">
+      <a href="https://www.instagram.com/lifeatkora/?utm_source=ig_web_button_share_sheet" target="_blank"
+        rel="noopener noreferrer">
+        <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g filter="url(#filter0_d_963_5749)">
+            <rect x="4" y="1" width="50" height="50" rx="25" fill="#E7E5E4" shape-rendering="crispEdges" />
+            <path
+              d="M34.5 20.5H34.51M24 16H34C36.7614 16 39 18.2386 39 21V31C39 33.7614 36.7614 36 34 36H24C21.2386 36 19 33.7614 19 31V21C19 18.2386 21.2386 16 24 16ZM33 25.3698C33.1234 26.2021 32.9812 27.052 32.5937 27.7988C32.2062 28.5456 31.5931 29.1512 30.8416 29.5295C30.0901 29.9077 29.2384 30.0394 28.4077 29.9057C27.5771 29.7721 26.8097 29.3799 26.2148 28.785C25.6199 28.1901 25.2277 27.4227 25.094 26.592C24.9604 25.7614 25.092 24.9097 25.4703 24.1582C25.8485 23.4067 26.4541 22.7936 27.2009 22.4061C27.9477 22.0186 28.7977 21.8764 29.63 21.9998C30.4789 22.1257 31.2648 22.5213 31.8716 23.1281C32.4785 23.735 32.8741 24.5209 33 25.3698Z"
+              stroke="#AB8C5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <filter id="filter0_d_963_5749" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha" />
+              <feOffset dy="3" />
+              <feGaussianBlur stdDeviation="2" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.13 0" />
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_963_5749" />
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_963_5749" result="shape" />
+            </filter>
+          </defs>
+        </svg>
+
+
+      </a>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
