@@ -9,6 +9,9 @@
     content="Kora is a modern sanctuary where movement, recovery and community meet. We help members grow their mind, body and spirit. We’re here for the long run.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preload" as="image" href="imgs/optimized/background.webp" fetchpriority="high">
+  <!-- Manrope Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
     rel="stylesheet">
@@ -204,6 +207,31 @@
     </div>
   </section>
   <!-- ===== WAITLIST CTA ===== -->
+  <section class="membership-section reveal-on-scroll" id="memberships" aria-labelledby="membership-title">
+    <div class="membership-shell">
+      <div class="membership-header">
+        <h2 id="membership-title">Kora Memberships</h2>
+      </div>
+
+      <div class="membership-tabs" role="tablist" aria-label="Membership plan duration">
+        <button class="membership-tab is-active" type="button" role="tab" aria-selected="true" data-membership-tab="monthly">
+          Monthly
+        </button>
+        <button class="membership-tab" type="button" role="tab" aria-selected="false" data-membership-tab="quarterly">
+          Quarterly
+        </button>
+        <button class="membership-tab" type="button" role="tab" aria-selected="false" data-membership-tab="yearly">
+          Yearly
+        </button>
+        <button class="membership-tab" type="button" role="tab" aria-selected="false" data-membership-tab="daypasses">
+          Day Passes
+        </button>
+      </div>
+
+      <div class="membership-grid" data-membership-grid aria-live="polite"></div>
+    </div>
+  </section>
+
   <section class="waitlist-cta reveal-on-scroll" aria-labelledby="waitlist-cta-title">
     <h2 id="waitlist-cta-title">A quiet space to mend, move, and rest</h2>
     <!-- ===== INSTAGRAM LINK ===== -->
