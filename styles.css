@@ -343,6 +343,10 @@ a {
   letter-spacing: 0.04em;
 }
 
+.required-marker {
+  color: var(--danger);
+}
+
 .signup input[type="text"],
 .signup input[type="email"],
 .signup input[type="tel"] {

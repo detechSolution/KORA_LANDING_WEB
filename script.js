@@ -7,7 +7,6 @@ let phoneInput;
 let validationState = {
   name: false,
   email: false,
-  phone: false,
 };
 
 function getFormControls() {
@@ -24,36 +23,27 @@ function getFormControls() {
 
 function getPhoneOptions() {
   return {
-    preferredCountries: [
-      "np",
-      "us",
-      "gb",
-      "de",
-      "fr",
-      "it",
-      "es",
-      "nl",
-      "au",
-      "in",
-    ],
+    preferredCountries: ["np", "in", "us", "gb"],
     separateDialCode: true,
-    utilsScript:
-      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    autoPlaceholder: "auto",
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    autoPlaceholder: "polite",
     formatOnDisplay: true,
     allowDropdown: true,
-    geoIpLookup: (callback) => {
-      fetch("https://ipapi.co/json/")
-        .then((res) => res.json())
-        .then((data) => callback(data.country_code))
-        .catch(() => callback("np"));
-    },
+    initialCountry: "np",
   };
 }
 
 function initializePhoneInput() {
   const { phoneElement } = getFormControls();
-  if (!phoneElement || typeof intlTelInput === "undefined") return;
+  if (!phoneElement) return;
+
+  phoneElement.setAttribute("inputmode", "tel");
+  phoneElement.removeAttribute("pattern");
+
+  if (typeof intlTelInput === "undefined") {
+    phoneElement.setAttribute("placeholder", "+977 98XXXXXXXX");
+    return;
+  }
 
   if (phoneInput && typeof phoneInput.destroy === "function") {
     phoneInput.destroy();
@@ -66,16 +56,13 @@ function validateForm() {
   const { submitButton, nameInput, emailInput } = getFormControls();
   const name = nameInput ? nameInput.value.trim() : "";
   const email = emailInput ? emailInput.value.trim() : "";
-  const isPhoneValid = phoneInput ? phoneInput.isValidNumber() : false;
 
   validationState = {
     name: name.length > 0,
     email: email.length > 0 && email.includes("@"),
-    phone: isPhoneValid,
   };
 
-  const isFormValid =
-    validationState.name && validationState.email && validationState.phone;
+  const isFormValid = validationState.name && validationState.email;
 
   if (submitButton) {
     submitButton.disabled = !isFormValid;
@@ -99,8 +86,21 @@ function getValidationErrors() {
   const errors = [];
   if (!validationState.name) errors.push("Name is required");
   if (!validationState.email) errors.push("Valid email is required");
-  if (!validationState.phone) errors.push("Valid phone number is required");
   return errors;
+}
+
+function getPhoneValueForSubmission() {
+  const { phoneElement } = getFormControls();
+  const rawPhone = phoneElement ? phoneElement.value.trim() : "";
+  if (!rawPhone) return "";
+  if (!phoneInput) return rawPhone;
+
+  const countryData = phoneInput.getSelectedCountryData();
+  const dialCode = countryData && countryData.dialCode
+    ? `+${countryData.dialCode}`
+    : "";
+
+  return dialCode ? `${dialCode} ${rawPhone}` : rawPhone;
 }
 
 function showValidationTooltip() {
@@ -174,10 +174,8 @@ async function handleFormSubmission(e) {
 
   try {
     const formData = new FormData(signupForm);
-
-    if (phoneInput) {
-      formData.set("phone", phoneInput.getNumber());
-    }
+    const submittedPhone = getPhoneValueForSubmission();
+    formData.set("phone", submittedPhone);
 
     if (formData.get("_gotcha")) {
       showSuccessMessage();
@@ -188,7 +186,7 @@ async function handleFormSubmission(e) {
       timestamp: new Date().toISOString(),
       name: (formData.get("name") || "").toString().trim(),
       email: (formData.get("email") || "").toString().trim(),
-      phone: phoneInput ? phoneInput.getNumber() : formData.get("phone") || "",
+      phone: submittedPhone,
       pageUrl: window.location.href,
       referrer: document.referrer || "",
     };
@@ -242,19 +240,19 @@ function renderFormFields() {
     </div>
 
     <div class="field">
-      <label for="name">Full name</label>
+      <label for="name">Full name <span class="required-marker" aria-hidden="true">*</span></label>
       <input id="name" name="name" type="text" placeholder="e.g. Jordan Rivera" autocomplete="name" required>
     </div>
 
     <div class="field">
-      <label for="email">Email</label>
+      <label for="email">Email <span class="required-marker" aria-hidden="true">*</span></label>
       <input id="email" name="email" type="email" placeholder="name@email.com" autocomplete="email" required>
     </div>
 
     <div class="field">
       <label for="phone">Phone number</label>
       <div class="phone-input-container">
-        <input type="tel" id="phone" name="phone" placeholder="Enter phone number" autocomplete="tel" required>
+        <input type="tel" id="phone" name="phone" placeholder="Enter phone number" autocomplete="tel">
       </div>
     </div>
 

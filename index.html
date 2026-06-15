@@ -24,7 +24,6 @@
     rel="stylesheet">
   <!-- External CSS -->
   <link rel="stylesheet" href="styles.css">
-  <!-- International Telephone Input CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
 </head>
 
@@ -68,19 +67,19 @@
             </div>
 
             <div class="field">
-              <label for="name">Full name</label>
+              <label for="name">Full name <span class="required-marker" aria-hidden="true">*</span></label>
               <input id="name" name="name" type="text" placeholder="e.g. Jordan Rivera" autocomplete="name" required>
             </div>
 
             <div class="field">
-              <label for="email">Email</label>
+              <label for="email">Email <span class="required-marker" aria-hidden="true">*</span></label>
               <input id="email" name="email" type="email" placeholder="name@email.com" autocomplete="email" required>
             </div>
 
             <div class="field">
               <label for="phone">Phone number</label>
               <div class="phone-input-container">
-                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" autocomplete="tel" required>
+                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" autocomplete="tel">
               </div>
             </div>
 
