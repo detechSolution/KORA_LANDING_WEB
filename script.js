@@ -666,26 +666,26 @@ function initMembershipPlans() {
           name: "Kora",
           note: "The Essentialist",
           price: "Rs. 19,000",
-          unit: "Per month",
           features: [
             "Unlimited Classes + 3 day advance Priority Booking",
             "Unlimited Sauna/Cold Plunge/jacuzzi/Heated Swimming Pool",
             "10% Disc. + 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes/ month",
             "2.5k credit + 10% Discount at Cafe",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
         {
           name: "Kora Plus",
           note: "The Enhanced",
           price: "Rs. 24,000",
-          unit: "Per month",
           features: [
             "Unlimited Classes + 7 Day advance Priority Booking",
             "Unlimited Sauna/Cold Plunge/jacuzzi/Heated Swimming Pool",
             "20% Disc. + 1 free KORA massages  at NAUD Thai Spa by Kora",
             "4 Guest Passes/ month (Share Spa)",
             "4.5k credit + 15% Discount at Cafe",
+            "15% off on physiotherapy & Nutritional consultation"
           ],
         },
       ],
@@ -697,26 +697,26 @@ function initMembershipPlans() {
           name: "Kora",
           note: "The Essentialist",
           price: "Rs. 51,300",
-          unit: "Per month",
           features: [
             "Unlimited classes +  3 day advance priority booking",
             "Unlimited Sauna/Cold Plunge/Jacuzzi/Heated Swimming Pool",
             "10% Disc. + 1 time 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes",
             "2.5k credit + 10% Discount at Cafe",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
         {
           name: "Kora Plus",
           note: "The Enhanced",
           price: "Rs. 64,800",
-          unit: "Per month",
           features: [
             "Unlimited Classes + 7 Day advance Priority Booking",
             "Unlimited Sauna/Cold Plunge/Jacuzzi/Heated Swimming Pool",
             "20% Disc. + 3 free KORA massages at NAUD Thai Spa by Kora",
             "4 Guest Passes (Share Spa)",
-            "4.5k credit + 15% Discount at Cafe"
+            "4.5k credit + 15% Discount at Cafe",
+            "15% off on physiotherapy & Nutritional consultation"
           ],
         },
       ],
@@ -728,20 +728,19 @@ function initMembershipPlans() {
           name: "Kora",
           note: "The Essentialist",
           price: "Rs. 2,09,000",
-          unit: "Per month",
           features: [
             "Unlimited Classes +  3 day advance Priority Booking",
             "Unlimited Sauna/Cold Plunge/Jacuzzi/Heated Swimming Pool",
             "10% Disc. + 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes",
             "3k credit + 12% Discount at Cafe",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
         {
           name: "Kora Plus",
           note: "The Enhanced",
           price: "Rs. 2,64,000",
-          unit: "Per month",
           features: [
             "Unlimited Classes + 7 Day advance Priority Booking",
             "Unlimited Sauna/Cold Plunge/jacuzzi/Heated Swimming Pool",
@@ -749,19 +748,20 @@ function initMembershipPlans() {
             "4 Guest Passes/ month (Share Spa)",
             "4.5k credit + 15% Discount at Cafe",
             "30 Days freeze policy",
+            "15% off on physiotherapy & Nutritional consultation"
           ],
         },
         {
           name: "Kora 100",
           note: "The Centum",
           price: "Rs. 72,000",
-          unit: "Per year",
           features: [
             "Unlimited Classes + 3 day advance Priority Booking",
             "Unlimited Sauna/Cold Plunge/jacuzzi/Heated Swimming Pool",
             "12% Disc. + 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes",
             "3k credit + 12% Discount at Cafe",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
       ],
@@ -779,6 +779,7 @@ function initMembershipPlans() {
             "Unlimited sauna, cold plunge, jacuzzi, heated swimming pool",
             "10% discount (cafe/spa/salon)",
             "Towel & locker included",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
         {
@@ -791,6 +792,7 @@ function initMembershipPlans() {
             "Unlimited sauna, cold plunge, jacuzzi, heated swimming pool",
             "10% discount (cafe/spa/salon)",
             "Towel & locker included",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
         {
@@ -803,6 +805,7 @@ function initMembershipPlans() {
             "Unlimited sauna, cold plunge, jacuzzi, heated swimming pool",
             "10% discount (cafe/spa/salon)",
             "Towel & locker included",
+            "10% off on physiotherapy & Nutritional consultation"
           ],
         },
       ],
@@ -824,7 +827,7 @@ function initMembershipPlans() {
                 <p class="membership-card-note">${card.note}</p>
               </div>
             </div>
-            <p class="membership-price">${card.price}<span class="membership-unit">${card.unit}</span></p>
+            <p class="membership-price">${card.price}<span class="membership-unit">${card.unit ?? ""}</span></p>
             <div class="membership-divider" aria-hidden="true"></div>
             <ul class="membership-features">
               ${card.features.map((feature) => `<li>${feature}</li>`).join("")}
