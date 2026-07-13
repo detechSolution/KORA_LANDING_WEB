@@ -1253,13 +1253,13 @@ a {
 }
 
 .membership-tab:focus-visible {
-  outline: 2px solid rgba(176, 145, 92, 0.35);
+  outline: 3px solid var(--cedar);
   outline-offset: 2px;
 }
 
 .membership-tab.is-active {
-  border-color: #b0915c;
-  background: #b0915c;
+  border-color: #7a5d38;
+  background: #7a5d38;
   color: #fffdf9;
 }
 
@@ -1269,6 +1269,11 @@ a {
   gap: 36px;
   align-items: start;
   grid-auto-rows: 1fr;
+}
+
+.membership-grid:focus-visible {
+  outline: 3px solid var(--cedar);
+  outline-offset: 6px;
 }
 
 .membership-card {
@@ -1363,6 +1368,77 @@ a {
   line-height: 1.45;
 }
 
+.membership-grid.is-corporate {
+  grid-template-columns: minmax(0, 650px);
+  justify-content: center;
+}
+
+.membership-card--corporate {
+  width: 100%;
+  padding: clamp(24px, 3.2vw, 32px);
+}
+
+.membership-card--corporate .membership-card-top {
+  margin-bottom: 18px;
+}
+
+.membership-card--corporate .membership-card-note {
+  color: #7a5d38;
+  font-weight: 600;
+}
+
+.membership-card--corporate .membership-divider {
+  margin: 10px 0 24px;
+}
+
+.membership-card--corporate .membership-features {
+  gap: 14px;
+}
+
+.membership-card--corporate .membership-features li {
+  padding-left: 28px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.membership-card--corporate .membership-features li::before {
+  font-size: 0.86rem;
+}
+
+.membership-request-button {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 28px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.membership-request-button:hover {
+  background: #342e28;
+  transform: translateY(-1px);
+}
+
+.membership-request-button:active {
+  transform: translateY(0);
+}
+
+.membership-request-button:focus-visible {
+  outline: 3px solid var(--cedar);
+  outline-offset: 3px;
+}
+
 @media (max-width: 1180px) {
   .membership-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1406,6 +1482,176 @@ a {
 
   .membership-price {
     font-size: 2.2rem;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.corporate-modal {
+  width: min(760px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+}
+
+.corporate-modal::backdrop {
+  background: rgba(27, 24, 21, 0.76);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.corporate-request-form.signup {
+  width: 100%;
+  justify-self: auto;
+  padding: clamp(26px, 4vw, 34px);
+  opacity: 1;
+  transform: none;
+  scroll-margin-top: 0;
+}
+
+.corporate-form-intro {
+  margin-bottom: 20px;
+  padding-right: 72px;
+}
+
+.corporate-form-intro .form-kicker {
+  margin-bottom: 6px;
+  color: #7a5d38;
+}
+
+.corporate-form-intro h2 {
+  margin-bottom: 0;
+  font-size: clamp(1.55rem, 3vw, 1.9rem);
+  line-height: 1.05;
+}
+
+.corporate-modal-close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.corporate-modal-close:hover {
+  background: rgba(97, 74, 54, 0.1);
+  color: var(--ink);
+}
+
+.corporate-modal-close:focus-visible {
+  outline: 3px solid var(--cedar);
+  outline-offset: 3px;
+}
+
+.corporate-submit-button.submit-button:focus-visible {
+  outline: 3px solid var(--cedar);
+  outline-offset: 3px;
+}
+
+.corporate-submit-button.submit-button.enabled {
+  background: var(--ink);
+  box-shadow: 0 16px 36px rgba(32, 28, 24, 0.22);
+}
+
+.corporate-submit-button.submit-button:hover:not(:disabled) {
+  background: #342e28;
+  box-shadow: 0 20px 40px rgba(32, 28, 24, 0.28);
+}
+
+.corporate-submit-button.submit-button:disabled {
+  background: #d4cabe;
+  box-shadow: none;
+}
+
+.corporate-form-status {
+  min-height: 1.35em;
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.corporate-form-status.is-success {
+  color: var(--success);
+}
+
+.corporate-form-status.is-error {
+  color: var(--danger);
+}
+
+@media (max-width: 760px) {
+  .membership-grid.is-corporate {
+    grid-template-columns: 1fr;
+  }
+
+  .membership-card--corporate {
+    padding: 20px;
+  }
+
+  .membership-card--corporate .membership-features {
+    gap: 12px;
+  }
+
+  .membership-card--corporate .membership-features li {
+    padding-left: 24px;
+    font-size: 0.84rem;
+  }
+
+  .membership-request-button {
+    min-height: 50px;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .corporate-modal {
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 20px;
+  }
+
+  .corporate-request-form.signup {
+    padding: 26px 18px 22px;
+    border-radius: 20px;
+  }
+
+  .corporate-request-form.signup::before {
+    inset: 8px;
+    border-radius: 13px;
+  }
+
+  .corporate-form-intro {
+    padding-right: 58px;
+  }
+
+  .corporate-modal-close {
+    top: 20px;
+    right: 18px;
   }
 }
 

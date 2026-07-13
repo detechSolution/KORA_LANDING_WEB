@@ -237,21 +237,30 @@
       </div>
 
       <div class="membership-tabs" role="tablist" aria-label="Membership plan duration">
-        <button class="membership-tab is-active" type="button" role="tab" aria-selected="true" data-membership-tab="monthly">
+        <button class="membership-tab is-active" id="membership-tab-monthly" type="button" role="tab"
+          aria-selected="true" aria-controls="membership-panel" tabindex="0" data-membership-tab="monthly">
           Monthly
         </button>
-        <button class="membership-tab" type="button" role="tab" aria-selected="false" data-membership-tab="quarterly">
+        <button class="membership-tab" id="membership-tab-quarterly" type="button" role="tab" aria-selected="false"
+          aria-controls="membership-panel" tabindex="-1" data-membership-tab="quarterly">
           Quarterly
         </button>
-        <button class="membership-tab" type="button" role="tab" aria-selected="false" data-membership-tab="yearly">
+        <button class="membership-tab" id="membership-tab-yearly" type="button" role="tab" aria-selected="false"
+          aria-controls="membership-panel" tabindex="-1" data-membership-tab="yearly">
           Yearly
         </button>
-        <button class="membership-tab" type="button" role="tab" aria-selected="false" data-membership-tab="daypasses">
+        <button class="membership-tab" id="membership-tab-daypasses" type="button" role="tab" aria-selected="false"
+          aria-controls="membership-panel" tabindex="-1" data-membership-tab="daypasses">
           Day Passes
+        </button>
+        <button class="membership-tab" id="membership-tab-koracorporate" type="button" role="tab"
+          aria-selected="false" aria-controls="membership-panel" tabindex="-1" data-membership-tab="koracorporate">
+          Kora Corporate
         </button>
       </div>
 
-      <div class="membership-grid" data-membership-grid aria-live="polite"></div>
+      <div class="membership-grid" id="membership-panel" role="tabpanel" tabindex="0"
+        aria-labelledby="membership-tab-monthly" data-membership-grid aria-live="polite"></div>
     </div>
   </section>
 
@@ -288,6 +297,67 @@
       </a>
     </div>
   </section>
+
+  <dialog class="corporate-modal" id="corporate-pricing-dialog" data-corporate-modal
+    aria-labelledby="corporate-pricing-title">
+    <form method="dialog" class="signup corporate-request-form" id="corporate-request-form"
+      aria-describedby="corporate-form-status">
+      <button type="button" class="corporate-modal-close" data-close-corporate-modal
+        aria-label="Close corporate pricing form"><span aria-hidden="true">&times;</span></button>
+
+      <div class="form-intro corporate-form-intro">
+        <p class="form-kicker">Request pricing</p>
+        <h2 id="corporate-pricing-title">Submit the form to request pricing</h2>
+      </div>
+
+      <div class="field">
+        <label for="corporate-name">Full name <span class="required-marker" aria-hidden="true">*</span></label>
+        <input id="corporate-name" name="name" type="text" placeholder="e.g. Jordan Rivera" autocomplete="name"
+          required autofocus>
+      </div>
+
+      <div class="field">
+        <label for="corporate-email">Email <span class="required-marker" aria-hidden="true">*</span></label>
+        <input id="corporate-email" name="email" type="email" placeholder="name@email.com" autocomplete="email"
+          required>
+      </div>
+
+      <div class="field">
+        <label for="corporate-phone">Phone number</label>
+        <div class="phone-input-container">
+          <input id="corporate-phone" name="phone" type="tel" placeholder="Enter phone number" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="corporate-company-name">Company name </label>
+        <input id="corporate-company-name" name="companyName" type="text" placeholder="Enter company name"
+          autocomplete="organization">
+      </div>
+
+      <div class="field">
+          <label for="corporate-company-address">Company address </label>
+        <input id="corporate-company-address" name="companyAddress" type="text" placeholder="Enter company address"
+          autocomplete="street-address">
+      </div>
+
+      <button type="submit" class="submit-button enabled corporate-submit-button" aria-label="Submit pricing request">
+        <span class="button-text">Submit</span>
+        <span class="button-loading" hidden>
+          <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" aria-hidden="true">
+            <path d="M21 12a9 9 0 11-6.219-8.56" />
+          </svg>
+          Submitting...
+        </span>
+      </button>
+      <p class="corporate-form-status" id="corporate-form-status" role="status" aria-live="polite"
+        aria-atomic="true"></p>
+
+      <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="submissionType" value="corporate_pricing">
+    </form>
+  </dialog>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>

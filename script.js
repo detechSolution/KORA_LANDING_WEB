@@ -1,9 +1,11 @@
 // Google Sheets dual-submit. CORS note: text/plain avoids an Apps Script preflight.
 const GOOGLE_SHEETS_URL =
-  "https://script.google.com/macros/s/AKfycbyM1uZ8xfFDlwjfyWbfFH91MqgyFn1LrBOW5w6q9K2D5oA5QHoBG8u1PhhchyKmIaWudg/exec";
+  "https://script.google.com/macros/s/AKfycbwMIgFk7Znt2jjV3eqzO9FeHUT_RAvlzw_6t5Da_ZFgbqHbvYVVSvV8hSDRrXBQi0BdiQ/exec";
+const FORMSPREE_URL = "https://formspree.io/f/xojbjrab";
 
 const signupForm = document.getElementById("signup");
 let phoneInput;
+let corporatePhoneInput;
 let validationState = {
   name: false,
   email: false,
@@ -25,7 +27,8 @@ function getPhoneOptions() {
   return {
     preferredCountries: ["np", "in", "us", "gb"],
     separateDialCode: true,
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    utilsScript:
+      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     autoPlaceholder: "polite",
     formatOnDisplay: true,
     allowDropdown: true,
@@ -33,23 +36,26 @@ function getPhoneOptions() {
   };
 }
 
-function initializePhoneInput() {
-  const { phoneElement } = getFormControls();
-  if (!phoneElement) return;
-
+function initializePhoneElement(phoneElement, currentInstance) {
+  if (!phoneElement) return currentInstance;
   phoneElement.setAttribute("inputmode", "tel");
   phoneElement.removeAttribute("pattern");
 
   if (typeof intlTelInput === "undefined") {
     phoneElement.setAttribute("placeholder", "+977 98XXXXXXXX");
-    return;
+    return null;
   }
 
-  if (phoneInput && typeof phoneInput.destroy === "function") {
-    phoneInput.destroy();
+  if (currentInstance && typeof currentInstance.destroy === "function") {
+    currentInstance.destroy();
   }
 
-  phoneInput = intlTelInput(phoneElement, getPhoneOptions());
+  return intlTelInput(phoneElement, getPhoneOptions());
+}
+
+function initializePhoneInput() {
+  const { phoneElement } = getFormControls();
+  phoneInput = initializePhoneElement(phoneElement, phoneInput);
 }
 
 function validateForm() {
@@ -89,18 +95,21 @@ function getValidationErrors() {
   return errors;
 }
 
-function getPhoneValueForSubmission() {
-  const { phoneElement } = getFormControls();
+function formatPhoneValueForSubmission(phoneElement, inputInstance) {
   const rawPhone = phoneElement ? phoneElement.value.trim() : "";
   if (!rawPhone) return "";
-  if (!phoneInput) return rawPhone;
+  if (!inputInstance) return rawPhone;
 
-  const countryData = phoneInput.getSelectedCountryData();
-  const dialCode = countryData && countryData.dialCode
-    ? `+${countryData.dialCode}`
-    : "";
+  const countryData = inputInstance.getSelectedCountryData();
+  const dialCode =
+    countryData && countryData.dialCode ? `+${countryData.dialCode}` : "";
 
   return dialCode ? `${dialCode} ${rawPhone}` : rawPhone;
+}
+
+function getPhoneValueForSubmission() {
+  const { phoneElement } = getFormControls();
+  return formatPhoneValueForSubmission(phoneElement, phoneInput);
 }
 
 function showValidationTooltip() {
@@ -156,6 +165,14 @@ function submitToGoogleSheets(payload) {
   });
 }
 
+function submitToFormspree(formData) {
+  return fetch(FORMSPREE_URL, {
+    method: "POST",
+    body: formData,
+    headers: { Accept: "application/json" },
+  });
+}
+
 function setLoadingState(isLoading) {
   const { submitButton, buttonText, buttonLoading } = getFormControls();
   if (!submitButton || !buttonText || !buttonLoading) return;
@@ -192,11 +209,7 @@ async function handleFormSubmission(e) {
     };
 
     const [formspreeResult, sheetsResult] = await Promise.allSettled([
-      fetch("https://formspree.io/f/xojbjrab", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      }),
+      submitToFormspree(formData),
       submitToGoogleSheets(payload),
     ]);
 
@@ -606,10 +619,14 @@ function initSpacesSwiper() {
 
       if (!isDragging && event.pointerType === "mouse") {
         swiper.classList.toggle("is-hover-left", pointerX < edgeSize);
-        swiper.classList.toggle("is-hover-right", pointerX > rect.width - edgeSize);
+        swiper.classList.toggle(
+          "is-hover-right",
+          pointerX > rect.width - edgeSize,
+        );
       }
 
-      if (isDragging && Math.abs(event.clientX - dragStartX) > 8) didDrag = true;
+      if (isDragging && Math.abs(event.clientX - dragStartX) > 8)
+        didDrag = true;
     },
     { passive: true },
   );
@@ -672,7 +689,7 @@ function initMembershipPlans() {
             "10% Disc. + 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes/ month",
             "2.5k credit + 10% Discount at Cafe",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
         },
         {
@@ -685,7 +702,7 @@ function initMembershipPlans() {
             "20% Disc. + 1 free KORA massages  at NAUD Thai Spa by Kora",
             "4 Guest Passes/ month (Share Spa)",
             "4.5k credit + 15% Discount at Cafe",
-            "15% off on physiotherapy & Nutritional consultation"
+            "15% off on physiotherapy & Nutritional consultation",
           ],
         },
       ],
@@ -703,7 +720,7 @@ function initMembershipPlans() {
             "10% Disc. + 1 time 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes",
             "2.5k credit + 10% Discount at Cafe",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
         },
         {
@@ -716,7 +733,7 @@ function initMembershipPlans() {
             "20% Disc. + 3 free KORA massages at NAUD Thai Spa by Kora",
             "4 Guest Passes (Share Spa)",
             "4.5k credit + 15% Discount at Cafe",
-            "15% off on physiotherapy & Nutritional consultation"
+            "15% off on physiotherapy & Nutritional consultation",
           ],
         },
       ],
@@ -734,7 +751,7 @@ function initMembershipPlans() {
             "10% Disc. + 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes",
             "3k credit + 12% Discount at Cafe",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
         },
         {
@@ -748,7 +765,7 @@ function initMembershipPlans() {
             "4 Guest Passes/ month (Share Spa)",
             "4.5k credit + 15% Discount at Cafe",
             "30 Days freeze policy",
-            "15% off on physiotherapy & Nutritional consultation"
+            "15% off on physiotherapy & Nutritional consultation",
           ],
         },
         {
@@ -761,7 +778,7 @@ function initMembershipPlans() {
             "12% Disc. + 30min KORA Welcome complimentary (Head & Shoulder or Foot) at NAUD Thai Spa by Kora",
             "3 Guest Passes",
             "3k credit + 12% Discount at Cafe",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
         },
       ],
@@ -779,7 +796,7 @@ function initMembershipPlans() {
             "Unlimited sauna, cold plunge, jacuzzi, heated swimming pool",
             "10% discount (cafe/spa/salon)",
             "Towel & locker included",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
         },
         {
@@ -787,12 +804,12 @@ function initMembershipPlans() {
           note: "",
           price: "Rs. 4,500",
           unit: "Per pass",
-         features: [
+          features: [
             "All classes access",
             "Unlimited sauna, cold plunge, jacuzzi, heated swimming pool",
             "10% discount (cafe/spa/salon)",
             "Towel & locker included",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
         },
         {
@@ -805,8 +822,30 @@ function initMembershipPlans() {
             "Unlimited sauna, cold plunge, jacuzzi, heated swimming pool",
             "10% discount (cafe/spa/salon)",
             "Towel & locker included",
-            "10% off on physiotherapy & Nutritional consultation"
+            "10% off on physiotherapy & Nutritional consultation",
           ],
+        },
+      ],
+    },
+    koracorporate: {
+      columns: 1,
+      isCorporate: true,
+      cards: [
+        {
+          name: "Kora Corporate",
+          note: "CORPORATE PACKAGE",
+          features: [
+            "Unlimited access to classes",
+            "Unlimited access to Recovery Area",
+            "15% Discount privilege at Nuad Thai Spa by KORA. One time 30 minute complimentary massage",
+            "Transferable Spa",
+            "3 Guest Passes monthly",
+            "12% Discount Privilege at cafe NORI along with 3.5k credit",
+            "7% Discount Privilege on Clinical (Physio)",
+            "7% Discount Privilege on Nutritionist",
+            "VIP Reserved Seating Included on Cinema nights / Events",
+          ],
+          ctaLabel: "Request Pricing",
         },
       ],
     },
@@ -817,43 +856,306 @@ function initMembershipPlans() {
     if (!current) return;
 
     grid.style.setProperty("--membership-columns", current.columns);
+    grid.classList.toggle("is-corporate", Boolean(current.isCorporate));
     grid.innerHTML = current.cards
       .map(
         (card) => `
-          <article class="membership-card">
+          <article class="membership-card${current.isCorporate ? " membership-card--corporate" : ""}">
             <div class="membership-card-top">
               <div>
                 <p class="membership-card-name">${card.name}</p>
                 <p class="membership-card-note">${card.note}</p>
               </div>
             </div>
-            <p class="membership-price">${card.price}<span class="membership-unit">${card.unit ?? ""}</span></p>
+            ${card.price ? `<p class="membership-price">${card.price}<span class="membership-unit">${card.unit ?? ""}</span></p>` : ""}
             <div class="membership-divider" aria-hidden="true"></div>
             <ul class="membership-features">
               ${card.features.map((feature) => `<li>${feature}</li>`).join("")}
             </ul>
+            ${card.ctaLabel ? `<button type="button" class="membership-request-button" aria-haspopup="dialog" aria-controls="corporate-pricing-dialog" data-open-corporate-pricing>${card.ctaLabel}</button>` : ""}
           </article>
         `,
       )
       .join("");
   }
 
+  function activateTab(tab) {
+    const key = tab.dataset.membershipTab;
+    tabs.forEach((item) => {
+      const isActive = item === tab;
+      item.classList.toggle("is-active", isActive);
+      item.setAttribute("aria-selected", isActive ? "true" : "false");
+      item.tabIndex = isActive ? 0 : -1;
+    });
+    grid.setAttribute("aria-labelledby", tab.id);
+    renderCards(key);
+  }
+
+  grid.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const requestButton = event.target.closest(
+      "[data-open-corporate-pricing]",
+    );
+    if (!requestButton || !grid.contains(requestButton)) return;
+    openCorporatePricingModal(requestButton);
+  });
+
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      const key = tab.dataset.membershipTab;
-      tabs.forEach((item) => {
-        const isActive = item === tab;
-        item.classList.toggle("is-active", isActive);
-        item.setAttribute("aria-selected", isActive ? "true" : "false");
-      });
-      renderCards(key);
+      activateTab(tab);
+    });
+
+    tab.addEventListener("keydown", (event) => {
+      const currentIndex = tabs.indexOf(tab);
+      let nextIndex;
+
+      if (event.key === "ArrowRight") {
+        nextIndex = (currentIndex + 1) % tabs.length;
+      } else if (event.key === "ArrowLeft") {
+        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = tabs.length - 1;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      tabs[nextIndex].focus();
+      activateTab(tabs[nextIndex]);
     });
   });
 
-  renderCards("monthly");
+  const initialTab = tabs.find((tab) => tab.classList.contains("is-active"));
+  activateTab(initialTab || tabs[0]);
 }
 
 document.addEventListener("DOMContentLoaded", initMembershipPlans);
+
+function getCorporateModalElements() {
+  const modal = document.querySelector("[data-corporate-modal]");
+  const form = document.getElementById("corporate-request-form");
+
+  return {
+    modal,
+    form,
+    closeButton: modal?.querySelector("[data-close-corporate-modal]"),
+    nameInput: form?.querySelector('input[name="name"]'),
+    phoneElement: form?.querySelector('input[name="phone"]'),
+    submitButton: form?.querySelector('button[type="submit"]'),
+    buttonText: form?.querySelector(".button-text"),
+    buttonLoading: form?.querySelector(".button-loading"),
+    status: form?.querySelector(".corporate-form-status"),
+  };
+}
+
+function resetCorporateSubmissionState() {
+  const { form, submitButton, buttonText, buttonLoading, status } =
+    getCorporateModalElements();
+  if (!form || !submitButton || !buttonText || !buttonLoading || !status)
+    return;
+
+  delete form.dataset.submitted;
+  form.removeAttribute("aria-busy");
+  submitButton.disabled = false;
+  submitButton.classList.add("enabled");
+  submitButton.classList.remove("disabled");
+  buttonText.textContent = "Submit";
+  buttonText.hidden = false;
+  buttonLoading.hidden = true;
+  status.textContent = "";
+  status.classList.remove("is-success", "is-error");
+}
+
+function openCorporatePricingModal(trigger) {
+  const { modal, form, nameInput, phoneElement } = getCorporateModalElements();
+  if (!modal || !form) return;
+
+  if (form.dataset.submitted === "true") {
+    form.reset();
+    resetCorporateSubmissionState();
+  }
+
+  modal.returnFocusElement = trigger;
+
+  if (typeof modal.showModal === "function") {
+    if (!modal.open) modal.showModal();
+  } else {
+    modal.setAttribute("open", "");
+  }
+
+  document.body.classList.add("modal-open");
+
+  if (!corporatePhoneInput) {
+    corporatePhoneInput = initializePhoneElement(
+      phoneElement,
+      corporatePhoneInput,
+    );
+  }
+
+  window.requestAnimationFrame(() => nameInput?.focus());
+}
+
+function restoreCorporateModalFocus(modal) {
+  document.body.classList.remove("modal-open");
+  const focusTarget = modal.returnFocusElement;
+  modal.returnFocusElement = null;
+  if (focusTarget && focusTarget.isConnected) focusTarget.focus();
+}
+
+function closeCorporatePricingModal() {
+  const { modal } = getCorporateModalElements();
+  if (!modal || !modal.open) return;
+
+  if (typeof modal.close === "function") {
+    modal.close();
+  } else {
+    modal.removeAttribute("open");
+    restoreCorporateModalFocus(modal);
+  }
+}
+
+function setCorporateLoadingState(isLoading) {
+  const { form, submitButton, buttonText, buttonLoading } =
+    getCorporateModalElements();
+  if (!form || !submitButton || !buttonText || !buttonLoading) return;
+
+  const wasSubmitted = form.dataset.submitted === "true";
+  submitButton.disabled = isLoading || wasSubmitted;
+  submitButton.classList.toggle("enabled", !isLoading && !wasSubmitted);
+  submitButton.classList.toggle("disabled", isLoading || wasSubmitted);
+  buttonText.hidden = isLoading;
+  buttonLoading.hidden = !isLoading;
+
+  if (isLoading) {
+    form.setAttribute("aria-busy", "true");
+  } else {
+    form.removeAttribute("aria-busy");
+  }
+}
+
+function showCorporateFormStatus(message, type) {
+  const { status } = getCorporateModalElements();
+  if (!status) return;
+
+  status.textContent = message;
+  status.classList.toggle("is-success", type === "success");
+  status.classList.toggle("is-error", type === "error");
+}
+
+function completeCorporateSubmission(form) {
+  const { buttonText } = getCorporateModalElements();
+
+  form.dataset.submitted = "true";
+  form.reset();
+  if (
+    corporatePhoneInput &&
+    typeof corporatePhoneInput.setNumber === "function"
+  ) {
+    corporatePhoneInput.setNumber("");
+  }
+  if (buttonText) buttonText.textContent = "Request sent";
+  showCorporateFormStatus(
+    "Request received. We'll contact you with corporate pricing soon.",
+    "success",
+  );
+}
+
+async function handleCorporateFormSubmission(event) {
+  event.preventDefault();
+
+  const form = event.currentTarget;
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  const formData = new FormData(form);
+  const { phoneElement } = getCorporateModalElements();
+  const submittedPhone = formatPhoneValueForSubmission(
+    phoneElement,
+    corporatePhoneInput,
+  );
+  formData.set("phone", submittedPhone);
+
+  if (formData.get("_gotcha")) {
+    completeCorporateSubmission(form);
+    setCorporateLoadingState(false);
+    return;
+  }
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    name: (formData.get("name") || "").toString().trim(),
+    email: (formData.get("email") || "").toString().trim(),
+    phone: submittedPhone,
+    pageUrl: window.location.href,
+    referrer: document.referrer || "",
+    submissionType: "corporate_pricing",
+    companyName: (formData.get("companyName") || "").toString().trim(),
+    companyAddress: (formData.get("companyAddress") || "")
+      .toString()
+      .trim(),
+  };
+
+  setCorporateLoadingState(true);
+  showCorporateFormStatus("", "");
+
+  try {
+    const sheetsResponse = await submitToGoogleSheets(payload);
+    if (!sheetsResponse.ok) {
+      showCorporateFormStatus(
+        "Unable to submit your request. Please try again.",
+        "error",
+      );
+      return;
+    }
+
+    completeCorporateSubmission(form);
+  } catch (error) {
+    console.error("Corporate pricing submission error:", error);
+    showCorporateFormStatus(
+      "Network error. Please check your connection and try again.",
+      "error",
+    );
+  } finally {
+    setCorporateLoadingState(false);
+  }
+}
+
+function initCorporatePricingModal() {
+  const { modal, form, closeButton, status } = getCorporateModalElements();
+  if (!modal || !form || !closeButton) return;
+
+  form.addEventListener("submit", handleCorporateFormSubmission);
+  closeButton.addEventListener("click", closeCorporatePricingModal);
+
+  form.addEventListener("input", () => {
+    if (status?.classList.contains("is-error")) {
+      showCorporateFormStatus("", "");
+    }
+  });
+
+  modal.addEventListener("click", (event) => {
+    if (event.target !== modal) return;
+
+    const formRect = form.getBoundingClientRect();
+    const clickedOutsideForm =
+      event.clientX < formRect.left ||
+      event.clientX > formRect.right ||
+      event.clientY < formRect.top ||
+      event.clientY > formRect.bottom;
+
+    if (clickedOutsideForm) closeCorporatePricingModal();
+  });
+
+  modal.addEventListener("close", () => {
+    restoreCorporateModalFocus(modal);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initCorporatePricingModal);
 
 function initWaitlistScroll() {
   const ctaButton = document.querySelector("[data-scroll-to-signup]");
